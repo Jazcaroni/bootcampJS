@@ -62,5 +62,5 @@ const grupoE: Grupomusical = {
 console.log("%c" + grupoA.nombreGrupo, estiloNombre, grupoA);
 console.log("%c" + grupoB.nombreGrupo, estiloNombre, grupoB);
 console.log("%c" + grupoC.nombreGrupo, estiloNombre, grupoC);
-console.log("%c" + grupoD.nombreGrupo, estiloNombre, grupoD);
+console.log("%c" + grupoD.compositor, estiloNombre, grupoD);
 console.log("%c" + grupoE.nombreGrupo, estiloNombre, grupoE);
