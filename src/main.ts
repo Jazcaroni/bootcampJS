@@ -1,66 +1,50 @@
-const popRock = "🎵 Pop Rock";
-const rock = "🎸 Rock";
-const hardRock = "🎼 Clásica";
-const clasica = "🤘 Hard Rock";
-const estiloNombre =
-  "background-color: green; font-size: 18px; font-weight: bold"; //estilo fondo verde y negrita del nombre  del grupo
+const anterior = (): void => {
+  const elemento = document.getElementById("numero-turno");
+  if (elemento && elemento instanceof HTMLElement) {
+    let numeroActual: number = parseInt(elemento.innerText);
+    const result: number | string = `${--numeroActual}`.padStart(2, "0");
+    elemento.innerText = result;
+  }
+};
+const siguiente = (): void => {
+  const elemento = document.getElementById("numero-turno");
+  if (elemento && elemento instanceof HTMLElement) {
+    let numeroActual: number = parseInt(elemento.innerText);
+    const result: number | string = `${++numeroActual}`.padStart(2, "0");
+    elemento.innerText = result;
+  }
+};
 
-interface Grupomusical {
-  nombreGrupo: string;
-  cantante: string;
-  compositor: string;
-  año: number;
-  activo: boolean;
-  Género: string;
+const resert = (): void => {
+  const elemento = document.getElementById("numero-turno");
+  if (elemento && elemento instanceof HTMLElement) {
+    elemento.innerText = "00";
+  }
+};
+
+const botonSiguiente = document.getElementById("siguiente");
+if (
+  botonSiguiente !== null &&
+  botonSiguiente !== undefined &&
+  botonSiguiente instanceof HTMLButtonElement
+) {
+  botonSiguiente.addEventListener("click", siguiente);
 }
 
-const grupoA: Grupomusical = {
-  nombreGrupo: "The Beatles",
-  año: 1960,
-  activo: true,
-  Género: popRock,
-  cantante: "",
-  compositor: "",
-};
+const botonAnterior = document.getElementById("anterior");
+if (
+  botonAnterior !== null &&
+  botonAnterior !== undefined &&
+  botonAnterior instanceof HTMLButtonElement
+) {
+  botonAnterior.addEventListener("click", anterior);
+}
 
-const grupoB: Grupomusical = {
-  nombreGrupo: "Queen",
-  año: 1970,
-  activo: false,
-  Género: rock,
-  cantante: "",
-  compositor: "",
-};
-
-const grupoC: Grupomusical = {
-  nombreGrupo: "AC DC",
-  año: 1973,
-  activo: true,
-  Género: hardRock,
-  cantante: "",
-  compositor: "",
-};
-
-const grupoD: Grupomusical = {
-  compositor: "Ludwig van Beethoven",
-  año: 1770,
-  activo: false,
-  Género: clasica,
-  nombreGrupo: "",
-  cantante: "",
-};
-
-const grupoE: Grupomusical = {
-  nombreGrupo: "The Rolling Stones",
-  año: 1962,
-  activo: true,
-  Género: rock,
-  cantante: "",
-  compositor: "",
-};
-
-console.log("%c" + grupoA.nombreGrupo, estiloNombre, grupoA);
-console.log("%c" + grupoB.nombreGrupo, estiloNombre, grupoB);
-console.log("%c" + grupoC.nombreGrupo, estiloNombre, grupoC);
-console.log("%c" + grupoD.compositor, estiloNombre, grupoD);
-console.log("%c" + grupoE.nombreGrupo, estiloNombre, grupoE);
+const botonResetear = document.getElementById("resert");
+if (
+  botonResetear !== null &&
+  botonResetear !== undefined &&
+  botonResetear instanceof HTMLButtonElement
+) {
+  botonResetear.addEventListener("click", resert);
+}
