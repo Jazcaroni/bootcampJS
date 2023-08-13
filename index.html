@@ -8,18 +8,25 @@
     <title>Vite + TS</title>
   </head>
   <body>
-    <div class="turno-display">
-      <h1 id="numero-turno" class="numero-turno">00</h1>
-
-      <p class="texto-turno">Por favor, acérquese al mostrador</p>
-      <div>
-        <button class="botones" id="anterior">Anterior</button>
-        <button class="botones" id="siguiente">Siguiente</button>
-        <!-- <button class="botones-insertsar" id="insertar">Insertar</button>-->
-        <button class="botones" id="resert">Resetear</button>
-      </div>
-    </div>
-
+   
+<div  id="app">
+      <h1>Juego de cartas siete y medio </h1>
+    
+   <div>    
+      <img 
+      id="div-CartaJugador"
+      src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg"
+      alt="Carta boca abajo"/> 
+  </div> 
+  <div id="div-MostrarPuntuacion"></div>
+          <div id="botones" >
+            <button  id="btnDameCarta">Pedir Carta</button>
+            <button  id="btn-mePlanto">Me planto</button>
+            <button  id="btn-nuevaPartida">Nueva partida</button>
+            <button  id="btn-queHabriaPasado">Ver lo que habría pasado</button>
+          </div>
+          <div id="div-mensajeResultadoJuego"></div>
+    </html>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
