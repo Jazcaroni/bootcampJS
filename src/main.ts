@@ -22,6 +22,9 @@ const pedirCarta = (): void => {
   sumarPuntuacion(carta);
   muestraPuntuacion();
   comprobarJuego();
+  deshabilitarbtnMePlanto(false);
+  deshabilitarbtnNuevaPartida(false);
+  deshabilitarQueHabriaPasado(true);
 };
 
 const generarNumeroAleatorio = () => {
@@ -162,11 +165,14 @@ const mePlanto = () => {
     mostrarPuntuacion(mensaje);
   }
   deshabilitarbtnMePlanto(true);
+  deshabilitarQueHabriaPasado(false);
 };
 
 const despuesDePlantar = () => {
-  if (puntosTotales < 4) {
+  if (puntosTotales <= 4) {
     return "Has sido muy conservador 🤔";
+  } else if (puntosTotales === 4.5) {
+    return "Has sido conservador🥱";
   } else if (puntosTotales === 5) {
     return "Te has asustado eh? 😅";
   } else if (puntosTotales >= 6 && puntosTotales <= 7) {
@@ -188,16 +194,26 @@ if (
 }
 
 //7. Nueva partida *********************
-
+const deshabilitarbtnNuevaPartida = (estaDesabilitado: boolean) => {
+  const btnNuevaPartida = document.getElementById("btn-nuevaPartida");
+  if (
+    btnNuevaPartida !== undefined &&
+    btnNuevaPartida !== null &&
+    btnNuevaPartida instanceof HTMLButtonElement
+  ) {
+    btnNuevaPartida.disabled = estaDesabilitado;
+  }
+};
 const nuevaPartida = () => {
   puntosTotales = 0;
 
-  deshabilitarbtnMePlanto(false);
+  deshabilitarbtnMePlanto(true);
   deshabilitarBtnPedirCarta(false);
-  deshabilitarQueHabriaPasado(false);
+  deshabilitarQueHabriaPasado(true);
   muestraPuntuacion();
   mostrarPuntuacion("");
   mostrarCarta(0);
+  deshabilitarbtnNuevaPartida(true);
 };
 
 const btnNuevaPartida = document.getElementById("btn-nuevaPartida");
@@ -228,6 +244,7 @@ const deshabilitarQueHabriaPasado = (estaDesabilitado: boolean) => {
 const simularPartida = () => {
   muestraPuntuacion();
   mostrarPuntuacion("");
+  pedirCarta();
 
   const puntuacionInicial = puntosTotales;
 
@@ -238,12 +255,14 @@ const simularPartida = () => {
     puntosTotales += valorPunto;
   }
 
-  const resultado =
-    puntosTotales === 7.5
-      ? "¡Lo has clavado! 😃 ¡Enhorabuena! 🏆🏅"
-      : puntosTotales > 7.5
-      ? "Te habrías pasado de 7.5 😥"
-      : `Has llegado a ${puntosTotales}, pero ya te habías plantado con ${puntuacionInicial}`;
+  let resultado = "";
+  if (puntosTotales === 7.5) {
+    resultado = "¡Lo has clavado! 😃 ¡Enhorabuena! 🏆🏅";
+  } else if (puntosTotales > 7.5) {
+    resultado = "Te habrías pasado de 7.5 😥";
+  } else {
+    resultado = `Has llegado a ${puntosTotales}, pero ya te habías plantado con ${puntuacionInicial}`;
+  }
 
   mostrarPuntuacion(resultado);
   deshabilitarBtnPedirCarta(true);
@@ -259,3 +278,4 @@ if (
 ) {
   btnQueHabriaPasado.addEventListener("click", simularPartida);
 }
+// subiendo código acomodao
