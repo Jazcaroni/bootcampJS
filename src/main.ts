@@ -1,9 +1,7 @@
+const LIMITE_PUNTUACION: number = 7.5;
 //1. Mostrar Puntuación  *********************
-
 let puntosTotales: number = 0;
-
 const divMostrarPuntuacion = document.getElementById("div-MostrarPuntuacion");
-
 const muestraPuntuacion = () => {
   if (
     divMostrarPuntuacion !== undefined &&
@@ -13,7 +11,6 @@ const muestraPuntuacion = () => {
     divMostrarPuntuacion.textContent = `Puntuación: ${puntosTotales}`;
   }
 };
-
 // 2. Pedir carta  *********************
 const pedirCarta = (): void => {
   const numeroAleatorio = generarNumeroAleatorio();
@@ -22,19 +19,15 @@ const pedirCarta = (): void => {
   sumarPuntuacion(carta);
   muestraPuntuacion();
   comprobarJuego();
-  deshabilitarbtnMePlanto(false);
   deshabilitarbtnNuevaPartida(false);
-  deshabilitarQueHabriaPasado(true);
+  deshabilitarbtnMePlanto(false);
 };
-
 const generarNumeroAleatorio = () => {
   return Math.floor(Math.random() * 10) + 1;
 };
-
 const generarNumeroDeCarta = (numeroAleatorio: number) => {
   return numeroAleatorio > 7 ? numeroAleatorio + 2 : numeroAleatorio;
 };
-
 const obtenerUrlDeCarta = (carta: number) => {
   switch (carta) {
     case 1:
@@ -61,11 +54,8 @@ const obtenerUrlDeCarta = (carta: number) => {
       return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg";
   }
 };
-
 const calcularValorPunto = (carta: number) => (carta >= 10 ? 0.5 : carta);
-
 const btnPedirCarta = document.getElementById("btnDameCarta");
-
 if (
   btnPedirCarta !== undefined &&
   btnPedirCarta !== null &&
@@ -73,9 +63,7 @@ if (
 ) {
   btnPedirCarta.addEventListener("click", pedirCarta);
 }
-
 // 3. Mostrar carta   *********************
-
 const mostrarCarta = (carta: number) => {
   const divCartaJugador = document.getElementById("div-CartaJugador");
   if (
@@ -86,26 +74,23 @@ const mostrarCarta = (carta: number) => {
     divCartaJugador.src = obtenerUrlDeCarta(carta);
   }
 };
-
 //4. Sumar puntuación  *********************
 const sumarPuntuacion = (carta: number) => {
   const valorPunto = calcularValorPunto(carta);
   puntosTotales += valorPunto;
 };
 //5. Game over  *********************
-
 const comprobarJuego = () => {
   if (puntosTotales === 0) {
     deshabilitarQueHabriaPasado(false);
   }
-  if (puntosTotales > 7.5) {
+  if (puntosTotales > LIMITE_PUNTUACION) {
     perderPartida();
   }
-  if (puntosTotales === 7.5) {
+  if (puntosTotales === LIMITE_PUNTUACION) {
     ganarPartida();
   }
 };
-
 const mostrarPuntuacion = (mensaje: string) => {
   const divMensajeResultadoJuego = document.getElementById(
     "div-mensajeResultadoJuego"
@@ -118,10 +103,8 @@ const mostrarPuntuacion = (mensaje: string) => {
     divMensajeResultadoJuego.textContent = mensaje;
   }
 };
-
 const deshabilitarBtnPedirCarta = (estaDesabilitado: boolean) => {
   const btnPedirCarta = document.getElementById("btnDameCarta");
-
   if (
     btnPedirCarta !== undefined &&
     btnPedirCarta !== null &&
@@ -130,7 +113,6 @@ const deshabilitarBtnPedirCarta = (estaDesabilitado: boolean) => {
     btnPedirCarta.disabled = estaDesabilitado;
   }
 };
-
 const ganarPartida = () => {
   let mensaje = "Felicitaciones 😃 ¡Has ganado! 🏆🏅";
   deshabilitarBtnPedirCarta(true);
@@ -145,9 +127,7 @@ const perderPartida = () => {
   deshabilitarQueHabriaPasado(true);
   mostrarPuntuacion(mensaje);
 };
-
 //6. Me planto *********************
-
 const deshabilitarbtnMePlanto = (estaDesabilitado: boolean) => {
   const btnMePlanto = document.getElementById("btn-mePlanto");
   if (
@@ -167,24 +147,21 @@ const mePlanto = () => {
   deshabilitarbtnMePlanto(true);
   deshabilitarQueHabriaPasado(false);
 };
-
 const despuesDePlantar = () => {
   if (puntosTotales <= 4) {
     return "Has sido muy conservador 🤔";
   } else if (puntosTotales === 4.5) {
     return "Has sido conservador🥱";
-  } else if (puntosTotales === 5) {
+  } else if (puntosTotales >= 5) {
     return "Te has asustado eh? 😅";
   } else if (puntosTotales >= 6 && puntosTotales <= 7) {
     return "Casi casi... 🙄";
-  } else if (puntosTotales === 7.5) {
-    return "¡ Lo has clavado! 😃 ¡Enhorabuena! 🏆🏅";
-  }
+  } //else if (puntosTotales === 7.5) {
+  // return "¡ Lo has clavado! 😃 ¡Enhorabuena! 🏆🏅";
+  //}
   return "Algo ha salido mal 😵";
 };
-
 const btnMePlanto = document.getElementById("btn-mePlanto");
-
 if (
   btnMePlanto !== undefined &&
   btnMePlanto !== null &&
@@ -192,7 +169,6 @@ if (
 ) {
   btnMePlanto.addEventListener("click", mePlanto);
 }
-
 //7. Nueva partida *********************
 const deshabilitarbtnNuevaPartida = (estaDesabilitado: boolean) => {
   const btnNuevaPartida = document.getElementById("btn-nuevaPartida");
@@ -206,7 +182,6 @@ const deshabilitarbtnNuevaPartida = (estaDesabilitado: boolean) => {
 };
 const nuevaPartida = () => {
   puntosTotales = 0;
-
   deshabilitarbtnMePlanto(true);
   deshabilitarBtnPedirCarta(false);
   deshabilitarQueHabriaPasado(true);
@@ -215,9 +190,7 @@ const nuevaPartida = () => {
   mostrarCarta(0);
   deshabilitarbtnNuevaPartida(true);
 };
-
 const btnNuevaPartida = document.getElementById("btn-nuevaPartida");
-
 if (
   btnNuevaPartida !== undefined &&
   btnNuevaPartida !== null &&
@@ -226,12 +199,9 @@ if (
   //agregar el evento click
   btnNuevaPartida.addEventListener("click", nuevaPartida);
 }
-
 // Apartado OPCIONAL  *********************
-
 const deshabilitarQueHabriaPasado = (estaDesabilitado: boolean) => {
   const btnQueHabriaPasado = document.getElementById("btn-queHabriaPasado");
-
   if (
     btnQueHabriaPasado !== undefined &&
     btnQueHabriaPasado !== null &&
@@ -240,36 +210,31 @@ const deshabilitarQueHabriaPasado = (estaDesabilitado: boolean) => {
     btnQueHabriaPasado.disabled = estaDesabilitado;
   }
 };
-
-const simularPartida = () => {
-  muestraPuntuacion();
-  mostrarPuntuacion("");
-  pedirCarta();
-
-  const puntuacionInicial = puntosTotales;
-
-  if (puntosTotales < 7.5) {
-    const numeroAleatorio = generarNumeroAleatorio();
-    const carta = generarNumeroDeCarta(numeroAleatorio);
-    const valorPunto = calcularValorPunto(carta);
-    puntosTotales += valorPunto;
-  }
-
-  let resultado = "";
-  if (puntosTotales === 7.5) {
-    resultado = "¡Lo has clavado! 😃 ¡Enhorabuena! 🏆🏅";
-  } else if (puntosTotales > 7.5) {
-    resultado = "Te habrías pasado de 7.5 😥";
+const obtenerResultado = (): string => {
+  if (puntosTotales === LIMITE_PUNTUACION) {
+    return "¡Lo habrías clavado! 😃 ¡Suerte para a próxima! 🏆🏅";
+  } else if (puntosTotales > LIMITE_PUNTUACION) {
+    return "Te habrías pasado de 7.5 😥";
   } else {
-    resultado = `Has llegado a ${puntosTotales}, pero ya te habías plantado con ${puntuacionInicial}`;
+    return `Habrías llegado a ${puntosTotales}, ¡pero ya te habías plantado!`;
   }
-
+};
+const generarNuevoNumeroAleatorio = () => {
+  return Math.floor(Math.random() * 10) + 1;
+};
+const simularPartida = () => {
+  const nuevoNumeroAleatorio = generarNuevoNumeroAleatorio();
+  const nuevaCarta = generarNumeroDeCarta(nuevoNumeroAleatorio);
+  mostrarCarta(nuevaCarta);
+  sumarPuntuacion(nuevaCarta);
+  muestraPuntuacion();
+  comprobarJuego();
+  const resultado = obtenerResultado();
   mostrarPuntuacion(resultado);
   deshabilitarBtnPedirCarta(true);
   deshabilitarbtnMePlanto(true);
   deshabilitarQueHabriaPasado(true);
 };
-
 const btnQueHabriaPasado = document.getElementById("btn-queHabriaPasado");
 if (
   btnQueHabriaPasado !== undefined &&
@@ -278,4 +243,3 @@ if (
 ) {
   btnQueHabriaPasado.addEventListener("click", simularPartida);
 }
-// subiendo código acomodao
