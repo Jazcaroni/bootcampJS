@@ -1,4 +1,4 @@
-import { LIMITE_PUNTUACION, partida } from "./modelo";
+import { partida } from "./modelo";
 import {
   generarNumeroAleatorio,
   generarNumeroDeCarta,
@@ -7,13 +7,16 @@ import {
   generarNuevoNumeroAleatorio,
   despuesDePlantar,
   obtenerResultado,
+  obtenerEstadoPartida,
+  calcularValorPunto,
 } from "./motor";
 
 export const pedirCarta = (): void => {
   const numeroAleatorio = generarNumeroAleatorio();
   const carta = generarNumeroDeCarta(numeroAleatorio);
   mostrarCarta(carta);
-  sumarPuntuacion(carta);
+  const valorPunto = calcularValorPunto(carta);
+  sumarPuntuacion(valorPunto);
   muestraPuntuacion();
   comprobarJuego();
   deshabilitarbtnNuevaPartida(false);
@@ -45,7 +48,8 @@ export const simularPartida = () => {
   const nuevoNumeroAleatorio = generarNuevoNumeroAleatorio();
   const nuevaCarta = generarNumeroDeCarta(nuevoNumeroAleatorio);
   mostrarCarta(nuevaCarta);
-  sumarPuntuacion(nuevaCarta);
+  const valorPunto = calcularValorPunto(nuevaCarta);
+  sumarPuntuacion(valorPunto);
   muestraPuntuacion();
   comprobarJuego();
   const resultado = obtenerResultado();
@@ -111,13 +115,14 @@ export const comprobarJuego = () => {
   if (partida.puntosTotales === 0) {
     deshabilitarQueHabriaPasado(false);
   }
-  if (partida.puntosTotales > LIMITE_PUNTUACION) {
+  if (obtenerEstadoPartida() === "PERDER_PARTIDA") {
     perderPartida();
   }
-  if (partida.puntosTotales === LIMITE_PUNTUACION) {
+  if (obtenerEstadoPartida() === "GANAR_PARTIDA") {
     ganarPartida();
   }
 };
+
 const ganarPartida = () => {
   let mensaje = "Felicitaciones 😃 ¡Has ganado! 🏆🏅";
   deshabilitarBtnPedirCarta(true);

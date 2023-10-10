@@ -1,4 +1,4 @@
-import { LIMITE_PUNTUACION, partida } from "./modelo";
+import { LIMITE_PUNTUACION, partida, EstadoPartida } from "./modelo";
 
 export const generarNumeroAleatorio = () => {
   return Math.floor(Math.random() * 10) + 1;
@@ -37,8 +37,7 @@ export const obtenerUrlDeCarta = (carta: number) => {
   }
 };
 
-export const sumarPuntuacion = (carta: number) => {
-  const valorPunto = calcularValorPunto(carta);
+export const sumarPuntuacion = (valorPunto: number) => {
   partida.puntosTotales += valorPunto;
 };
 
@@ -69,4 +68,14 @@ export const obtenerResultado = (): string => {
   } else {
     return `Habrías llegado a ${partida.puntosTotales}, ¡pero ya te habías plantado!`;
   }
+};
+
+export const obtenerEstadoPartida = (): EstadoPartida => {
+  if (partida.puntosTotales === LIMITE_PUNTUACION) {
+    partida.estado = "GANAR_PARTIDA";
+  }
+  if (partida.puntosTotales > LIMITE_PUNTUACION) {
+    partida.estado = "PERDER_PARTIDA";
+  }
+  return partida.estado;
 };
