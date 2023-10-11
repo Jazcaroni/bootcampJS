@@ -1,7 +1,7 @@
 export const LIMITE_PUNTUACION: number = 7.5;
 
-export const PERDER_PARTIDA: number = 1;
-export const GANAR_PARTIDA: number = 2;
+export const PERDER_PARTIDA: EstadoPartida = "PERDER_PARTIDA";
+export const GANAR_PARTIDA: EstadoPartida = "GANAR_PARTIDA";
 
 interface Partida {
   numeroAleatorio: number;
@@ -16,4 +16,8 @@ export const partida: Partida = {
   estado: "PERDER_PARTIDA",
 };
 
-export type EstadoPartida = "GANAR_PARTIDA" | "PERDER_PARTIDA";
+export type EstadoPartida = "PERDER_PARTIDA" | "GANAR_PARTIDA" | "EN_CURSO";
+
+export const setPuntosTotales = (nuevosPuntos: number): void => {
+  partida.puntosTotales = nuevosPuntos;
+};

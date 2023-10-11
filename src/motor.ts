@@ -38,7 +38,7 @@ export const obtenerUrlDeCarta = (carta: number) => {
 };
 
 export const sumarPuntuacion = (valorPunto: number) => {
-  partida.puntosTotales += valorPunto;
+  return partida.puntosTotales + valorPunto;
 };
 
 export const generarNuevoNumeroAleatorio = () => {
@@ -72,10 +72,9 @@ export const obtenerResultado = (): string => {
 
 export const obtenerEstadoPartida = (): EstadoPartida => {
   if (partida.puntosTotales === LIMITE_PUNTUACION) {
-    partida.estado = "GANAR_PARTIDA";
+    return "GANAR_PARTIDA";
+  } else if (partida.puntosTotales > LIMITE_PUNTUACION) {
+    return "PERDER_PARTIDA";
   }
-  if (partida.puntosTotales > LIMITE_PUNTUACION) {
-    partida.estado = "PERDER_PARTIDA";
-  }
-  return partida.estado;
+  return "EN_CURSO";
 };

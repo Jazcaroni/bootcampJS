@@ -1,4 +1,4 @@
-import { partida } from "./modelo";
+import { partida, setPuntosTotales } from "./modelo";
 import {
   generarNumeroAleatorio,
   generarNumeroDeCarta,
@@ -16,7 +16,8 @@ export const pedirCarta = (): void => {
   const carta = generarNumeroDeCarta(numeroAleatorio);
   mostrarCarta(carta);
   const valorPunto = calcularValorPunto(carta);
-  sumarPuntuacion(valorPunto);
+  const puntosSumados = sumarPuntuacion(valorPunto);
+  setPuntosTotales(puntosSumados);
   muestraPuntuacion();
   comprobarJuego();
   deshabilitarbtnNuevaPartida(false);
@@ -49,7 +50,8 @@ export const simularPartida = () => {
   const nuevaCarta = generarNumeroDeCarta(nuevoNumeroAleatorio);
   mostrarCarta(nuevaCarta);
   const valorPunto = calcularValorPunto(nuevaCarta);
-  sumarPuntuacion(valorPunto);
+  const puntosSumados = sumarPuntuacion(valorPunto);
+  setPuntosTotales(puntosSumados);
   muestraPuntuacion();
   comprobarJuego();
   const resultado = obtenerResultado();
@@ -115,11 +117,12 @@ export const comprobarJuego = () => {
   if (partida.puntosTotales === 0) {
     deshabilitarQueHabriaPasado(false);
   }
-  if (obtenerEstadoPartida() === "PERDER_PARTIDA") {
-    perderPartida();
-  }
+
   if (obtenerEstadoPartida() === "GANAR_PARTIDA") {
     ganarPartida();
+  }
+  if (obtenerEstadoPartida() === "PERDER_PARTIDA") {
+    perderPartida();
   }
 };
 
