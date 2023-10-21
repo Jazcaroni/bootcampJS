@@ -17,6 +17,16 @@ describe("sumarPuntuacion", () => {
     //Assert
     expect(resultado).toBe(resultadoEsperado);
   });
+  it("Debería sumar correctamente el valorPunto de la carta y devolver mensaje de puntosTotales", () => {
+    //Arrange
+    const puntos: number = 5.5;
+    vi.spyOn(partida, "puntosTotales", "get").mockReturnValue(2);
+    const resultadoEsperado: number = 7.5;
+    //Act
+    const resultado = sumarPuntuacion(puntos);
+    //Assert
+    expect(resultado).toBe(resultadoEsperado);
+  });
 });
 
 describe("obtenerEstadoPartida", () => {
