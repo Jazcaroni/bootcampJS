@@ -79,17 +79,11 @@ const pacientes: Pacientes[] = [
 const obtenPacientesAsignadosAPediatria = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
-  const pacientesPediatra: Pacientes[] = [];
-
-  for (let i = 0; i < pacientes.length; i++) {
-    if (pacientes[i].especialidad === "Pediatra") {
-      pacientesPediatra.push({ ...pacientes[i] });
-    }
-  }
-
+  const pacientesPediatra = pacientes.filter(
+    (paciente: Pacientes) => paciente.especialidad === "Pediatra"
+  );
   return pacientesPediatra;
 };
-
 const pacientesPediatra = obtenPacientesAsignadosAPediatria(pacientes);
 console.log(pacientesPediatra);
 
@@ -97,73 +91,54 @@ console.log(pacientesPediatra);
 const obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
-  const pacientesPediatriaMenoresDiez: Pacientes[] = [];
-
-  for (let i = 0; i < pacientes.length; i++) {
-    if (pacientes[i].especialidad === "Pediatra" && pacientes[i].edad < 10) {
-      pacientesPediatriaMenoresDiez.push({ ...pacientes[i] });
-    }
-  }
+  const pacientesPediatriaMenoresDiez = pacientes.filter(
+    (paciente: Pacientes) =>
+      paciente.especialidad === "Pediatra" && paciente.edad < 10
+  );
   return pacientesPediatriaMenoresDiez;
 };
 const pacientesPediatriaMenoresDiez =
   obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios(pacientes);
 console.log(pacientesPediatriaMenoresDiez);
 
-//Queremos activar el protocolo de urgencia si cualquier de los pacientes tiene un ritmo cardíaco superior a 100 pulsaciones por minuto y una temperatura corporal superior a 39 grados.
+//c)Queremos activar el protocolo de urgencia si cualquier de los pacientes tiene un ritmo cardíaco superior a 100 pulsaciones por minuto y una temperatura corporal superior a 39 grados.
 
 //Es decir, crear una función que devuelve true/false dependiendo si se da la condición, algo así como:
 
 const activarProtocoloUrgencia = (pacientes: Pacientes[]): boolean => {
-  let activarProctolo = false;
-  for (let i = 0; i < pacientes.length; i++) {
-    if (
-      pacientes[i].temperatura > 39 &&
-      pacientes[i].frecuenciaCardiaca > 100
-    ) {
-      activarProctolo = true;
-      break;
-    }
-  }
-  return activarProctolo;
+  return pacientes.some(
+    (paciente) => paciente.temperatura > 39 && paciente.frecuenciaCardiaca > 100
+  ); // no estoy segura si some se debe aplicar aqui porque se pide que se cumplan las dos condiciones no una sola
 };
-const seActivaComprobar = activarProtocoloUrgencia(pacientes);
-console.log(seActivaComprobar);
+const debeActivarProtocolo = activarProtocoloUrgencia(pacientes);
+console.log(debeActivarProtocolo);
 
-//El pediatra no puede atender hoy a los pacientes, queremos reasignar los pacientes asignados a la especialidad de pediatría a la de medico de familia.
+//d)El pediatra no puede atender hoy a los pacientes, queremos reasignar los pacientes asignados a la especialidad de pediatría a la de medico de familia.
 
 const reasignaPacientesAMedicoFamilia = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
-  const nuevosPacientes = [...pacientes];
-
-  for (let i = 0; i < nuevosPacientes.length; i++) {
-    if (nuevosPacientes[i].especialidad === "Pediatra") {
-      nuevosPacientes[i] = {
-        ...nuevosPacientes[i],
-        especialidad: "Medico de familia",
-      };
+  const nuevosPacientes = pacientes.map((paciente: Pacientes) => {
+    if (paciente.especialidad === "Pediatra") {
+      return { ...paciente, especialidad: "Medico de familia" };
     }
-  }
+    return paciente;
+  });
 
   return nuevosPacientes;
 };
 
 const pacientesReasignados = reasignaPacientesAMedicoFamilia(pacientes);
 console.log(pacientesReasignados);
-
 //Queremos saber si podemos mandar al Pediatra a casa (si no tiene pacientes asignados), comprobar si en la lista hay algún paciente asignado a pediatría
 
 const HayPacientesDePediatria = (pacientes: Pacientes[]): boolean => {
-  let pacientesPediatria = false;
-
-  for (let i = 0; i < pacientes.length; i++) {
-    if (pacientes[i].especialidad === "Pediatra") {
-      pacientesPediatria = true;
-    }
-  }
-  return pacientesPediatria;
+  const indicePediatria = pacientes.findIndex(
+    (paciente) => paciente.especialidad === "Pediatra"
+  );
+  return indicePediatria !== -1;
 };
+
 const pacientesParaElPediatra = HayPacientesDePediatria(pacientes);
 console.log(pacientesParaElPediatra);
 
@@ -184,16 +159,19 @@ const cuentaPacientesPorEspecialidad = (
     pediatria: 0,
     cardiologia: 0,
   };
-  for (let i = 0; i < pacientes.length; i++) {
-    if (pacientes[i].especialidad === "Medico de familia") {
+
+  pacientes.forEach((paciente) => {
+    if (paciente.especialidad === "Medico de familia") {
       recuentoDePacientes.medicoDeFamilia++;
-    } else if (pacientes[i].especialidad === "Pediatra") {
+    } else if (paciente.especialidad === "Pediatra") {
       recuentoDePacientes.pediatria++;
-    } else if (pacientes[i].especialidad === "Cardiólogo") {
+    } else if (paciente.especialidad === "Cardiólogo") {
       recuentoDePacientes.cardiologia++;
     }
-  }
+  });
+
   return recuentoDePacientes;
 };
+
 const todosPacientes = cuentaPacientesPorEspecialidad(pacientes);
 console.log(todosPacientes);
