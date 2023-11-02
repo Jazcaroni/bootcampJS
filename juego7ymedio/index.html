@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <body>
+   
+<div  id="app">
+      <h1>Juego de cartas siete y medio </h1>
+    <!-- con desactivación de botones-->
+   <div>    
+      <img 
+      id="div-CartaJugador"
+      src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg"
+      alt="Carta boca abajo"/> 
+  </div> 
+  <div id="div-MostrarPuntuacion"></div>
+          <div id="botones" >
+            <button  id="btnDameCarta">Pedir Carta</button>
+            <button disabled="true" id="btn-mePlanto">Me planto</button>
+            <button  disabled="true" id="btn-nuevaPartida">Nueva partida</button>
+            <button disabled="true"  id="btn-queHabriaPasado">Ver lo que habría pasado</button>
+          </div>
+          <div id="div-mensajeResultadoJuego"></div>
+    </html>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: 000;
+}
+
+a {
+  font-weight: 500;
+  color: #252a88;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+}
+
+h1 {
+  font-size: 2.5em;
+  line-height: 1.1;
+  text-shadow: 2px 0px 7px #ffffff73;
+}
+
+.tablero-cartas {
+  display: inline-grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+  /* width: 700px;
+  height: 500px;
+  padding: 30px;
+  align-items: center;*/
+}
+
+.cartas {
+  width: 125px;
+  height: 125px;
+  background-color: #aee2ff;
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #e6fffd;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1.3em;
+  font-weight: 700;
+  font-family: inherit;
+  color: white;
+  background-color: #b799ff;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  margin: 6px;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
