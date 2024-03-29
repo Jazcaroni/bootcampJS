@@ -66,7 +66,7 @@ export interface ResultadoTotalTicket {
 }
 
 export interface TotalPorTipoIva {
-  tipoIva: TipoIVA;
+  tipoIva: TipoIva;
   cuantia: number;
 }
 
