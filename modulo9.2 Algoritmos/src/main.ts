@@ -1,176 +1,265 @@
-//Laboratorio Bucles
-type Especialidad = "Medico de familia" | "Pediatra" | "Cardiólogo";
+/* 
+En el proceso que de creación de una cuenta queremos evitar que el usuario puede crear una clave débil, para ellos nos piden que:
 
-interface Pacientes {
-  id: number;
-  nombre: string;
-  apellidos: string;
-  sexo: string;
-  temperatura: number;
-  frecuenciaCardiaca: number;
-  especialidad: Especialidad;
-  edad: number;
-}
+La clave debe de tener mayúsculas y minúsculas.
+La clave debe de tener números.
+La clave debe de tener caracteres especiales (@,#,+, _, ...)
+La clave debe de tener una longitud mínima de 8 caracteres.
+La clave no debe tener el nombre del usuario.
+La clave no debe de contener palabras comunes (le pasaremos un array de palabras comunes).
+En la firma debemos de evaluar si pasa o no, y también devolver un tipo de error indicando donde ha fallado
 
-const pacientes: Pacientes[] = [
-  {
-    id: 1,
-    nombre: "John",
-    apellidos: "Doe",
-    sexo: "Male",
-    temperatura: 36.8,
-    frecuenciaCardiaca: 80,
-    especialidad: "Medico de familia",
-    edad: 44,
-  },
-  {
-    id: 2,
-    nombre: "Jane",
-    apellidos: "Doe",
-    sexo: "Female",
-    temperatura: 36.8,
-    frecuenciaCardiaca: 70,
-    especialidad: "Medico de familia",
-    edad: 43,
-  },
-  {
-    id: 3,
-    nombre: "Junior",
-    apellidos: "Doe",
-    sexo: "Male",
-    temperatura: 36.8,
-    frecuenciaCardiaca: 90,
-    especialidad: "Pediatra",
-    edad: 8,
-  },
-  {
-    id: 4,
-    nombre: "Mary",
-    apellidos: "Wien",
-    sexo: "Female",
-    temperatura: 36.8,
-    frecuenciaCardiaca: 120,
-    especialidad: "Medico de familia",
-    edad: 20,
-  },
-  {
-    id: 5,
-    nombre: "Scarlett",
-    apellidos: "Somez",
-    sexo: "Female",
-    temperatura: 36.8,
-    frecuenciaCardiaca: 110,
-    especialidad: "Cardiólogo",
-    edad: 30,
-  },
-  {
-    id: 6,
-    nombre: "Brian",
-    apellidos: "Kid",
-    sexo: "Male",
-    temperatura: 39.8,
-    frecuenciaCardiaca: 80,
-    especialidad: "Pediatra",
-    edad: 11,
-  },
+
+*/
+
+const commonPasswords: string[] = [
+  "Psldfkd123@",
+  "password",
+  "123456",
+  "qwerty",
+  "admin",
+  "letmein",
+  "welcome",
+  "monkey",
+  "sunshine",
+  "password1",
+  "123456789",
+  "football",
+  "iloveyou",
+  "1234567",
+  "123123",
+  "12345678",
+  "abc123",
+  "qwerty123",
+  "1q2w3e4r",
+  "baseball",
+  "password123",
+  "superman",
+  "987654321",
+  "mypass",
+  "trustno1",
+  "hello123",
+  "dragon",
+  "1234",
+  "555555",
+  "loveme",
+  "hello",
+  "hockey",
+  "letmein123",
+  "welcome123",
+  "mustang",
+  "shadow",
+  "12345",
+  "passw0rd",
+  "abcdef",
+  "123abc",
+  "football123",
+  "master",
+  "jordan23",
+  "access",
+  "flower",
+  "qwertyuiop",
+  "admin123",
+  "iloveyou123",
+  "welcome1",
+  "monkey123",
+  "sunshine1",
+  "password12",
+  "1234567890",
 ];
-// Apartado Obligatorio
-//a) Queremos extraer la lista de paciente que están asignados a la especialidad de Pediatría
-const obtenPacientesAsignadosAPediatria = (
-  pacientes: Pacientes[]
-): Pacientes[] => {
-  const pacientesPediatra = pacientes.filter(
-    (paciente: Pacientes) => paciente.especialidad === "Pediatra"
-  );
-  return pacientesPediatra;
-};
-const pacientesPediatra = obtenPacientesAsignadosAPediatria(pacientes);
-console.log(pacientesPediatra);
 
-//b) Queremos extraer la lista de pacientes asignados a Pediatría y que tengan una edad menor de 10 años.
-const obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios = (
-  pacientes: Pacientes[]
-): Pacientes[] => {
-  const pacientesPediatriaMenoresDiez = pacientes.filter(
-    (paciente: Pacientes) =>
-      paciente.especialidad === "Pediatra" && paciente.edad < 10
-  );
-  return pacientesPediatriaMenoresDiez;
-};
-const pacientesPediatriaMenoresDiez =
-  obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios(pacientes);
-console.log(pacientesPediatriaMenoresDiez);
+/* 
 
-//c)Queremos activar el protocolo de urgencia si cualquier de los pacientes tiene un ritmo cardíaco superior a 100 pulsaciones por minuto y una temperatura corporal superior a 39 grados.
 
-//Es decir, crear una función que devuelve true/false dependiendo si se da la condición, algo así como:
+Nos crearemos una función para validar la clave, que nos devolverá un objeto con dos propiedades:
 
-const activarProtocoloUrgencia = (pacientes: Pacientes[]): boolean => {
-  return pacientes.some(
-    (paciente) => paciente.temperatura > 39 && paciente.frecuenciaCardiaca > 100
-  ); // no estoy segura si some se debe aplicar aqui porque se pide que se cumplan las dos condiciones no una sola
-};
-const debeActivarProtocolo = activarProtocoloUrgencia(pacientes);
-console.log(debeActivarProtocolo);
+esValida: booleano que nos indica si la clave es válida o no.
+error: string que nos indica el error que ha ocurrido.
+Vamos a crear un interfaz para la salida de la función:
 
-//d)El pediatra no puede atender hoy a los pacientes, queremos reasignar los pacientes asignados a la especialidad de pediatría a la de medico de familia.
+*/
 
-const reasignaPacientesAMedicoFamilia = (
-  pacientes: Pacientes[]
-): Pacientes[] => {
-  const nuevosPacientes = pacientes.map((paciente: Pacientes) => {
-    if (paciente.especialidad === "Pediatra") {
-      return { ...paciente, especialidad: "Medico de familia" };
-    }
-    return paciente;
-  });
-  return nuevosPacientes;
-};
-
-const pacientesReasignados = reasignaPacientesAMedicoFamilia(pacientes);
-console.log(pacientesReasignados);
-//Queremos saber si podemos mandar al Pediatra a casa (si no tiene pacientes asignados), comprobar si en la lista hay algún paciente asignado a pediatría
-
-const HayPacientesDePediatria = (pacientes: Pacientes[]): boolean => {
-  const indicePediatria = pacientes.findIndex(
-    (paciente) => paciente.especialidad === "Pediatra"
-  );
-  return indicePediatria !== -1;
-};
-
-const pacientesParaElPediatra = HayPacientesDePediatria(pacientes);
-console.log(pacientesParaElPediatra);
-
-// Apartado Opcional
-//Queremos calcular el número total de pacientes que están asignados a la especialidad de Medico de familia, y lo que están asignados a Pediatría y a cardiología
-
-interface NumeroPacientesPorEspecialidad {
-  medicoDeFamilia: number;
-  pediatria: number;
-  cardiologia: number;
+interface ValidacionClave {
+  esValida: boolean;
+  error?: string;
 }
 
-const cuentaPacientesPorEspecialidad = (
-  pacientes: Pacientes[]
-): NumeroPacientesPorEspecialidad => {
-  const recuentoDePacientes: NumeroPacientesPorEspecialidad = {
-    medicoDeFamilia: 0,
-    pediatria: 0,
-    cardiologia: 0,
-  };
+/* 
 
-  pacientes.forEach((paciente) => {
-    if (paciente.especialidad === "Medico de familia") {
-      recuentoDePacientes.medicoDeFamilia++;
-    } else if (paciente.especialidad === "Pediatra") {
-      recuentoDePacientes.pediatria++;
-    } else if (paciente.especialidad === "Cardiólogo") {
-      recuentoDePacientes.cardiologia++;
+Lo siguiente que vamos a hacer, es ir analizando cada una de las condiciones, para que nuestra clave sea válida:
+
+Pistas:
+
+Si la clave no tiene mayúsculas y minúsculas, el error será: "La clave debe de tener mayúsculas y minúsculas".
+Si la clave no tiene números, el error será: "La clave debe de tener números".
+Si la clave no tiene caracteres especiales, el error será: "La clave debe de tener caracteres especiales".
+Si la clave no tiene una longitud mínima de 8 caracteres, el error será: "La clave debe de tener una longitud mínima de 8 caracteres".
+Si la clave tiene el nombre del usuario, el error será: "La clave no debe tener el nombre del usuario".
+Si la clave tiene palabras comunes, el error será: "La clave no debe de contener palabras comunes".*/
+//La clave debe de tener mayúsculas y minúsculas.
+
+const tieneMayusculasYMinusculas = (clave: string): ValidacionClave => {
+  let tieneMayuscula = false;
+  let tieneMinuscula = false;
+
+  clave.split("").forEach((caracter) => {
+    if (caracter >= "A" && caracter <= "Z") {
+      tieneMayuscula = true;
+    } else if (caracter >= "a" && caracter <= "z") {
+      tieneMinuscula = true;
     }
   });
 
-  return recuentoDePacientes;
+  if (tieneMayuscula && tieneMinuscula) {
+    return { esValida: true };
+  } else {
+    return {
+      esValida: false,
+      error: "La clave debe de tener mayúsculas y minúsculas.",
+    };
+  }
 };
 
-const todosPacientes = cuentaPacientesPorEspecialidad(pacientes);
-console.log(todosPacientes);
+//La clave debe de tener números.
+const tieneNumeros = (clave: string): ValidacionClave => {
+  if (clave.split("").some((caracter) => !isNaN(parseInt(caracter)))) {
+    return { esValida: true };
+  } else {
+    return { esValida: false, error: "La clave debe de tener números." };
+  }
+};
+//La clave debe de tener caracteres especiales (@,#,+, _, ...)
+const tieneCaracteresEspeciales = (clave: string): ValidacionClave => {
+  const caracteresEspeciales = ["@", "#", "+", "-", "?"];
+  if (
+    clave.split("").some((caracter) => caracteresEspeciales.includes(caracter))
+  ) {
+    return { esValida: true };
+  } else {
+    return {
+      esValida: false,
+      error: "La clave debe de tener caracteres especiales.",
+    };
+  }
+};
+//La clave debe de tener una longitud mínima de 8 caracteres.
+const tieneLongitudMinima = (clave: string): ValidacionClave => {
+  const longitudMinima = 8;
+  if (clave.length >= longitudMinima) {
+    return { esValida: true };
+  } else {
+    return {
+      esValida: false,
+      error: "La clave debe tener una longitud minima de 8 caracteres",
+    };
+  }
+};
+//La clave no debe tener el nombre del usuario.
+const tieneNombreUsuario = (
+  nombreUsuario: string,
+  clave: string
+): ValidacionClave => {
+  if (!clave.toLowerCase().includes(nombreUsuario.toLowerCase())) {
+    return { esValida: true };
+  } else {
+    return {
+      esValida: false,
+      error: "La clave no debe tener el nombre del usuario.",
+    };
+  }
+};
+
+//La clave no debe de contener palabras comunes (le pasaremos un array de palabras comunes).
+const tienePalabrasComunes = (
+  clave: string,
+  commonPasswords: string[]
+): ValidacionClave => {
+  if (
+    !commonPasswords.some((common) =>
+      clave.toLocaleLowerCase().includes(common.toLocaleLowerCase())
+    )
+  ) {
+    return { esValida: true };
+  } else {
+    return {
+      esValida: false,
+      error: "La clave no debe de contener palabras comunes.",
+    };
+  }
+};
+/*const tienePalabrasComunes = (
+  clave: string,
+  commonPasswords: string[]
+): ValidacionClave => {
+  if (commonPasswords.includes(clave.toLowerCase())) {
+    return {
+      esValida: false,
+      error: "La clave no debe de contener palabras comunes.",
+    };
+  } else {
+    return { esValida: true };
+  }
+}; */
+/*Una vez que tenemos todas las funciones, ya estamos listos para crear la función validarClave que nos devolverá un objeto con dos propiedades:
+
+esValida: booleano, que nos indica si la clave es válida o no.
+error: string, que nos devolverá el primer error que encuentre, en caso de que tuviera.
+
+*/
+
+// Firma de la función
+const validarClave = (
+  nombreUsuario: string,
+  clave: string,
+  commonPasswords: string[]
+): ValidacionClave => {
+  let error: string | undefined;
+
+  switch (false) {
+    case tieneMayusculasYMinusculas(clave).esValida:
+      error = tieneMayusculasYMinusculas(clave).error;
+      break;
+    case tieneNumeros(clave).esValida:
+      error = tieneNumeros(clave).error;
+      break;
+    case tieneCaracteresEspeciales(clave).esValida:
+      error = tieneCaracteresEspeciales(clave).error;
+      break;
+    case tieneLongitudMinima(clave).esValida:
+      error = tieneLongitudMinima(clave).error;
+      break;
+    case !tieneNombreUsuario(nombreUsuario, clave).esValida:
+      error = "La clave no debe tener el nombre del usuario.";
+      break;
+    case !tienePalabrasComunes(clave, commonPasswords).esValida:
+      error = "La clave no debe de contener palabras comunes.";
+      break;
+  }
+
+  if (error) {
+    console.log("La contraseña no es válida:", error);
+    return { esValida: false, error };
+  } else {
+    console.log("La contraseña es válida.");
+    return { esValida: true };
+  }
+};
+
+console.log("Comprobando las funciones con el array commonPasswords:");
+
+commonPasswords.forEach((password) => {
+  console.log(`\nComprobando contraseña: ${password}`);
+
+  console.log("Mayúsculas y minúsculas:", tieneMayusculasYMinusculas(password));
+  console.log("Números:", tieneNumeros(password));
+  console.log("Caracteres especiales:", tieneCaracteresEspeciales(password));
+  console.log("Longitud mínima:", tieneLongitudMinima(password));
+  console.log(
+    "Nombre de usuario:",
+    tieneNombreUsuario("exampleUser", password)
+  );
+  console.log(
+    "Palabras comunes:",
+    tienePalabrasComunes(password, commonPasswords)
+  );
+});
