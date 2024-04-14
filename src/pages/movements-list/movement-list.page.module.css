@@ -1,0 +1,40 @@
+.root {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 5px solid #232c3b;
+}
+
+.header-container h1 {
+  font-size: 2.2rem;
+  font-weight: 300;
+}
+.title-balance {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.alias-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.text-balance {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--primary_color);
+  display: flex;
+  justify-content: flex-end;
+}
